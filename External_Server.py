@@ -43,7 +43,11 @@ def password_reset_portal():
 
 @app.route("/logout")
 def logout():
-    return render_template("index.html", isLoggedIn='user' in session)
+    user = session.pop('user', None)                    # Pop the user from session
+    for key in list(session.keys()):                    # Clear the rest of the session (if anything)
+        session.pop(key, None)
+    flash(f'{user} has been logged out!')               # Flash message on next page that the user signed out
+    return redirect(url_for("login"))
 
 @app.route("/login")
 def login():
