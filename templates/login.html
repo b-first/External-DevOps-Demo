@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block headblock %}
+<title>Login Page</title>
+<link href="{{ url_for('static', filename='CSS/authStyles.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block bodyblock %}
+<div class="sign_up_box">
+    <h2>Login</h2>
+    
+    <form action="#" method="post" id='loginForm'>
+        <div class="label_and_input">
+            <label for='Username' class="soft_text">Username</label>
+            <input type="text" name='Username' id='nm' placeholder='Enter Username' class="input_box"/>
+            </div>
+        <div class="label_and_input">
+            <label for='Password' class="soft_text">Password</label>
+            <input type='text' name='Password' id='pw' placeholder='Enter Password' class="input_box"/>
+            </div>
+        <div class="label_and_input">
+            <input type="submit" id='submitButton' value="Login" class="submit_style"/>
+            </div>
+
+        </form>
+    </div>        
+{% endblock %}
