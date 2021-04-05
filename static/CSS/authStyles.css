@@ -1,0 +1,53 @@
+.sign_up_box {
+    background: #eee;
+    padding: 10px;
+    width: 300px;
+    border-style: solid;
+    border-color: #777;
+    border-width: 2px;
+    border-radius: 5px;
+    margin: 20px auto;
+}
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #555;
+    font-family: Copperplate, Papyrus, fantasy;
+    text-align: center;
+}
+
+.label_and_input {
+    display: flex;
+    align-items: center;
+}
+
+.soft_text {
+    color: #555;
+    font-family: Copperplate, Papyrus, fantasy;
+    
+}
+
+.input_box{
+    border-color: #999;
+    border-width: 1px;
+    border-radius: 3px;
+    padding: 3px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+}
+
+.submit_style {
+    background: #ddd;
+    border-color: #999;
+    color: #555;
+    font-family: Copperplate, Papyrus, fantasy;
+    border-width: 1px;
+    border-radius: 3px;
+    padding: 5px;
+    width: 100%;
+    margin: auto;
+    margin-top: 10px;
+    cursor: pointer;
+}

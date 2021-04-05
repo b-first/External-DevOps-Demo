@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block headblock %}
+<title>Sign Up Page</title>
+<link href="{{ url_for('static', filename='CSS/authStyles.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block bodyblock %}
+<div class="sign_up_box">
+    <h2>Sign Up</h2>
+
+    <form action="#" method="post" id='signupForm' onsubmit="return validateSignup('signupForm')">
+        <div class="label_and_input">
+            <label for='Username' class="soft_text">Username</label>
+            <input type="text" name='Username' id='nm' placeholder='Enter Username' class="input_box"/>
+            </div>
+        <div class="label_and_input">
+            <label for='Password' class="soft_text">Password</label>
+            <input type='text' name='Password' id='pw' placeholder='Enter Password' class="input_box"/>
+            </div>
+        <div class="label_and_input">
+            <label for='Email' class='soft_text'>Email</label>
+            <input type='email' name='Email' id='email' placeholder="Optional" class="input_box"/>
+            </div>
+        <div class="label_and_input">
+            <input type="submit" id='submitButton' value="Create Account" class="submit_style"/>
+            </div>
+
+        </form>
+    
+    </div>
+
+
+<script src="{{url_for('static', filename='JS/validateForm.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="{{url_for('static', filename='CSS/baseStyles.css')}}" rel="stylesheet">
+    {% block headblock %}{% endblock %}
+    </head>
+
+<body>
+    <div class="site_header">
+        <h1 class=site_logo>Brandon's App</h1>
+        {% set home = 'home' %}
+        <button onclick="buttonRedirect('{{url_for(home)}}')" class="nav_bar_button">Home</button>
+        {% set user_page = 'user_page' %}
+        <button onclick="buttonRedirect('{{url_for(user_page)}}')" class="nav_bar_button">Your Page</button>
+        
+        {% if isLoggedIn %}
+            <div class='hover_div'>
+                {% set settings = 'settings' %}
+                <button onclick="buttonRedirect('{{url_for(settings)}}')" class="nav_bar_button">Settings</button>
+                <div class='dropdown_content'>
+                    {% set email_portal = 'email_portal' %}
+                    <button onclick="buttonRedirect('{{url_for(email_portal)}}')" class='dropdown_button'>Email Portal</button>
+                    {% set password_reset_portal = 'password_reset_portal' %}
+                    <button onclick="buttonRedirect('{{url_for(password_reset_portal)}}')" class='dropdown_button'>Password Reset Portal</button>
+                    </div>
+                </div>
+            {% set logout = 'logout' %}
+            <button onclick="buttonRedirect('{{url_for(logout)}}')" class="nav_bar_button">Logout</button>
+        {% else %}
+            {% set login = 'login' %}
+            <button onclick="buttonRedirect('{{url_for(login)}}')" class="nav_bar_button" style="margin-left: auto">Login</button>
+            {% set signup = 'signup' %}
+            <button onclick="buttonRedirect('{{url_for(signup)}}')" class="nav_bar_button">Sign Up</button>
+        {% endif %}
+    </div>
+    <hr>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p class="flash_messages">{{message}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% block bodyblock %}
+    {% endblock %}
+
+    <script>
+        function buttonRedirect(toWhere) {
+            window.location=toWhere;
+        }
+    </script>
+
+    </body>
+
+</html>
