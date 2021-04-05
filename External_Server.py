@@ -16,8 +16,8 @@ if SERVER is None:
     print('\nERROR: SERVER environment variable not found\n')
     exit()
 
-print('\nPort: ', PORT)
-print('Backend: ', SERVER, '\n')
+#print('\nPort: ', PORT)
+#print('Backend: ', SERVER, '\n')
 
 
 # Home page
@@ -54,9 +54,11 @@ def login():
     if request.method == "POST":                                # If data submitted with post method
         username = request.form['Username']                     # Take the value from the form from the input named nm
         password_plain = request.form['Password']
-        userData = [username, password_plain]                   # List of new user data to send to DB
         
-        #isLoginSuccess = authenticate_user(userData, db_info)    # Pass in [username, password_entered] and db connection info
+        if not username:                                        # Ensure username is not blank (causes an error on Firestore)
+            flash("No username entered")
+            return redirect(url_for('login'))
+
         response = requests.post(
             SERVER + '/login_internal',
             json={
@@ -64,19 +66,16 @@ def login():
                 'password_plain': password_plain
             },
         )
-        print(response.json())
+        
         if response.status_code == 200:
             session['user'] = username                          # Create a session
-            flash(f'{userData[0]} logged in!')                  # Flash message on next page that the user signed in
+            flash(f'{username} logged in!')                     # Flash message on next page that the user signed in
             return redirect(url_for("user_page"))               # Redirect to the user page
-        #elif isLoginSuccess is None:
-        #    flash('Incorrect username')
         else:
-            #flash('Incorrect password')
-            flash('Login failed')
+            flash(response.json().get('failure_message'))
 
     elif request.method == 'GET' and 'user' in session:         # If a session exists
-        return redirect(url_for("user_page"))                    # Redirect to user page
+        return redirect(url_for("user_page"))                   # Redirect to user page
     
     # Only makes it here if
         # GET while not signed in (no session)
@@ -88,14 +87,12 @@ def signup():
     if request.method == 'POST':
         username = request.form['Username']                 # Take username from the form (input named Username)
         password_plain = request.form['Password']           # Take password from the form (input name Password)
-        newUserData = [username, password_plain]            # List of new user data to send to DB
 
         # Frontend should validate username (and password) is not blank, but send back to sign in if not
         if username == '':
             flash('Blank username caught in backend, fix JS form validation')
             return render_template("signup.html", isLoggedIn=False)
         
-        #isSignupSuccess = db_add_user(newUserData, db_info)                 # Try to add the new user to the DB
         response = requests.post(
             SERVER + '/signup_internal',
             json={
@@ -103,13 +100,13 @@ def signup():
                 'password_plain': password_plain
             },
         )
-        print(response.json())
+        
         if response.status_code == 200:                                     # If successful
             session['user'] = username                                      # Create a session
             flash(f'Thanks for signing up '+ str(username) + '!')           # Flash success message on next page
             return redirect(url_for("user_page"))                           # Send to userPage
         else:
-            flash(f' Username"' + str(username) + '" is already taken')     # Flash failure message on next page
+            flash(f' Username "' + str(username) + '" is already taken')     # Flash failure message on next page
             return redirect(url_for('signup'))
 
     return render_template("signup.html", isLoggedIn='user' in session)
