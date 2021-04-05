@@ -64,6 +64,7 @@ def login():
                 'password_plain': password_plain
             },
         )
+        print(response.get_json())
         if response.status_code == 200:
             session['user'] = username                          # Create a session
             flash(f'{userData[0]} logged in!')                  # Flash message on next page that the user signed in
