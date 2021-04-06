@@ -9,7 +9,7 @@ app.secret_key = 'testKeyDontWorryAboutIt'                      # Used to hash s
 if os.environ.get('PORT'):
     PORT = os.environ.get('PORT')
 else:
-    PORT = 5000
+    PORT = 8080
 
 SERVER = os.environ.get('SERVER')
 if SERVER is None:
@@ -72,6 +72,13 @@ def login():
             flash(f'{username} logged in!')                     # Flash message on next page that the user signed in
             return redirect(url_for("user_page"))               # Redirect to the user page
         else:
+            print('hello')
+            print(type(response))
+            print(response)
+            #print(response.json())
+            #print(response.text)
+            print(SERVER)
+            print('done printing')
             flash(response.json().get('failure_message'))
 
     elif request.method == 'GET' and 'user' in session:         # If a session exists
@@ -114,4 +121,4 @@ def signup():
 
 
 if __name__ == "__main__":      # If we run this file directly
-    app.run(debug=True, port=PORT)         # Start the app (debug mode means code updates here take effect on page reload)
+    app.run(debug=True, port=PORT, host='0.0.0.0')         # Start the app (debug mode means code updates here take effect on page reload)
